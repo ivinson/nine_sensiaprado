@@ -1,0 +1,12 @@
+version: '3'
+
+services:
+   eventos-us:
+    build: .
+    container_name: nine_pacto_site
+    tty: true
+    stdin_open: true
+    volumes: 
+      - ./:/var/www/html
+    ports: 
+      - 8006:80
