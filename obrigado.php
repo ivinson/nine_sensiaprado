@@ -74,26 +74,28 @@
 
 
         <?php
-
-        require_once 'users/init.php';
+        // ini_set('display_errors', 1);
         // session_start();
-        $dados =    $_SESSION['data'];
+        require_once 'users/init.php';
+
+ 
+
         $db = DB::getInstance();
 
-        if ($dados['aula_personal'] != 'N') {
-            $horariopersonal = $db->query("SELECT horario FROM agendamentos WHERE  tipo = 'personal' AND id = " . $dados['aula_personal'])->first()->horario;
-        }else{
+        if ($_GET['aulaPersonal'] != 'N') {
+            $horariopersonal = $db->query("SELECT horario FROM agendamentos WHERE  tipo = 'personal' AND id = " . $_GET['aulaPersonal'])->first()->horario;
+        } else {
             $horariopersonal = 'Não irá fazer aula personal';
         }
 
-        if ($dados['aula_tenis'] != 'N') {
-            $horarioTenis = $db->query("SELECT horario FROM agendamentos WHERE  tipo = 'tenis' AND id = " . $dados['aula_tenis'])->first()->horario;
-        }else{
+        if ($_GET['aulaTenis'] != 'N') {
+            $horarioTenis = $db->query("SELECT horario FROM agendamentos WHERE  tipo = 'tenis' AND id = " . $_GET['aulaTenis'])->first()->horario;
+        } else {
             $horarioTenis = 'Não irá fazer aula de tênis';
         }
-        
-        
-        
+
+
+
 
         echo '<ul class="list-unstyled">';
         echo '<div class="alert alert-success" role="alert">';
@@ -101,11 +103,11 @@
         echo '<p>
             Não esqueça seus horarios de aula, e se precisar de algo, estamos a disposição.            
         </p>';
-        echo '<li><strong>Nome:</strong> ' . $dados['nome_completo'] . '</li>';
-        echo '<li><strong>Email:</strong> ' . $dados['email'] . '</li>';
-        echo '<li><strong>Telefone:</strong> ' . $dados['telefone'] . '</li>';
-        echo '<li><strong>Apartamento:</strong> ' . $dados['apartamento'] . '</li>';
-        echo '<li><strong>Horário de Chegada:</strong> ' . $dados['chegada'] . '</li>';
+        echo '<li><strong>Nome:</strong> ' . $_GET['nomeCompleto'] . '</li>';
+        echo '<li><strong>Email:</strong> ' . $_GET['email'] . '</li>';
+        echo '<li><strong>Telefone:</strong> ' . $_GET['telefone'] . '</li>';
+        echo '<li><strong>Apartamento:</strong> ' . $_GET['apartamento'] . '</li>';
+        echo '<li><strong>Horário de Chegada:</strong> ' . $_GET['chegada'] . '</li>';
         echo '<li><strong>Aula Personal:</strong> ' . $horariopersonal . '</li>';
         echo '<li><strong>Aula de Tênis:</strong> ' . $horarioTenis  . '</li>';
         echo '</ul>';

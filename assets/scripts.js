@@ -1,51 +1,40 @@
-
-// Path: assets/scripts.js
-// funcao que valida o formulario de cadastro
-//------------------------------------------------------------------------------
 document.addEventListener('DOMContentLoaded', function () {
-
-
-  document.getElementById('cadastroForm').addEventListener('submit', function (event) {
-    event.preventDefault();
-    event.stopPropagation();
-
-
-
-    //verificar se horarios de aula de tenis e personal sao as mesmas antes de continuar
-    var aulaPersonal = document.getElementById('aulaPersonal').value;
-    var aulaTenis = document.getElementById('aulaTenis').value;
-    var errorMessage = document.getElementById('errorMessage');
-
-    if (aulaPersonal && aulaTenis && aulaPersonal === aulaTenis) {
-      errorMessage.classList.remove('d-none');
-    } else {
-      errorMessage.classList.add('d-none');
-      // Mostrar swal ao iniciar o envio
-      Swal.fire({
-        // icon: 'error',
-        title: 'Atenção!',
-        text: 'Você não pode se inscrever em ambas as aulas no mesmo horário, e deve preencher todos os dados obrigatórios.'
-      });
-
-      return false;
-
-    }
-
-  });
-
-
-
   var form = document.getElementById('cadastroForm');
   if (!form) return;
 
   var isSubmitting = false; // Variável para rastrear o status de envio
   form.addEventListener('submit', function (event) {
-
     event.preventDefault();
+    event.stopPropagation();
+
+    var aulaPersonalElement = document.getElementById('aulaPersonal');
+    var aulaPersonal = aulaPersonalElement.options[aulaPersonalElement.selectedIndex].dataset.horario;
+
+    var aulaTenisElement = document.getElementById('aulaTenis');
+    var aulaTenis = aulaTenisElement.options[aulaTenisElement.selectedIndex].dataset.horario;
+
+    console.log('Aula Personal:', aulaPersonal);
+    console.log('Aula Tênis:', aulaTenis);
+
+    if (aulaPersonal && aulaTenis && aulaPersonal === aulaTenis) {
+      // Mostrar swal ao detectar conflito de horário
+      Swal.fire({
+        title: 'Atenção!',
+        text: 'Você não pode se inscrever em ambas as aulas no mesmo horário, e deve preencher todos os dados obrigatórios.',
+        icon: 'error'
+      }).then(() => {
+        aulaTenisElement.focus(); // Focar no campo de aula de tênis
+      });
+      return;
+    }
+
     if (form.checkValidity() === false) {
       event.stopPropagation();
-    } else if (!isSubmitting) {
+      form.classList.add('was-validated');
+      return;
+    }
 
+    if (!isSubmitting) {
       isSubmitting = true; // Indica que um envio está em progresso
 
       var submitButton = event.target.querySelector('button[type="submit"]');
@@ -74,7 +63,8 @@ document.addEventListener('DOMContentLoaded', function () {
           if (response.status === 200) {
             // Fechar swal após o envio bem-sucedido
             Swal.close();
-            window.location.href = 'obrigado.php';
+            // Redireciona para a página de agradecimento com os dados do formulário
+            window.location.href = 'obrigado.php?' + new URLSearchParams(new FormData(form)).toString();
           } else {
             console.error('#1: Erro ao processar o formulário - Status: ', response.status);
             submitButton.disabled = false;
@@ -99,14 +89,9 @@ document.addEventListener('DOMContentLoaded', function () {
             text: 'Erro ao enviar o formulário. Tente novamente.'
           });
         });
-
-
     }
-    form.classList.add('was-validated');
   }, false);
 });
-
-
 
 //------------------------------------------------------------------------------
 // Funções de validação

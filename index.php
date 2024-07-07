@@ -30,9 +30,20 @@
             <div style="padding:20px; padding-top:10px; padding-bottom:10px;">
                 <div>
                     <h1 class="text-center">Faça sua inscrição</h1>
-                    <p class="text-center">Preencha o formulário abaixo para confirmar sua presença no evento.</p>
+                    <!-- <p class="text-center">Preencha o formulário abaixo para confirmar sua presença no evento.</p> -->
+                    <div class="card mb-3 border-warning">
+                        <div class="card-body text-warning">
+                            <p class="small text-muted">
+                                Nota: Para garantir a melhor experiência para todos, permitimos a inscrição em apenas 2 horários por apartamento. Por favor, escolha seus horários de acordo com essa regra.
+                            </p>
+                        </div>
+                    </div>
                 </div>
             </div>
+
+
+
+
             <form id="cadastroForm" novalidate method="post" enctype="multipart/form-data">
 
 
@@ -91,7 +102,7 @@
                         $response = $db->query("SELECT * FROM agendamentos WHERE tipo = 'personal' AND qtd > 0 ");
                         $agendamentos = $response->results();
                         foreach ($agendamentos as $agendamento) {
-                            echo '<option value="' . $agendamento->id . '">' . $agendamento->horario . '  ('.$agendamento->qtd. ' vagas )' . '</option>';
+                            echo '<option data-horario="' . $agendamento->horario . '" value="' . $agendamento->id . '">' . $agendamento->horario . '  (' . $agendamento->qtd . ' vagas )' . '</option>';
                         }
                         ?>
                     </select>
@@ -108,7 +119,7 @@
                         $response = $db->query("SELECT * FROM agendamentos WHERE tipo = 'tenis' AND qtd > 0 ");
                         $agendamentos = $response->results();
                         foreach ($agendamentos as $agendamento) {
-                            echo '<option value="' . $agendamento->id . '">' . $agendamento->horario . ' ('.$agendamento->qtd. ' vagas )' . '</option>';                            
+                            echo '<option  data-horario="' . $agendamento->horario . '" value="' . $agendamento->id . '">' . $agendamento->horario . ' (' . $agendamento->qtd . ' vagas )' . '</option>';
                         }
                         ?>
                     </select>

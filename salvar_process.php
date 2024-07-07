@@ -20,8 +20,8 @@ $data = array(
   'aula_tenis' => $aulaTenis,
   'status_rsvp' => 'CONFIRMADO'
 );
-session_start();
-$_SESSION['data'] = $data;
+// session_start();
+// $_SESSION['data'] = $data;
 //-----------------------------------------------------------
 // atualizacao de convidado no banco de dados
 logger("1", "Confirmação inserida", "Dados do participante " . json_encode($data));
@@ -34,3 +34,6 @@ if ($aulaPersonal != 'N') {
 if ($aulaTenis != 'N') {
   $response = $db->query("UPDATE agendamentos SET qtd = qtd - 1 WHERE id = $aulaTenis");
 }
+
+ // devolver ao ajax os dados do convidado
+echo json_encode($data);
