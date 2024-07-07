@@ -71,16 +71,47 @@
 
     <div class="container py-0" style="max-width: 730px;">
 
-        <div id="msgUpload"></div>
+
 
         <?php
 
-        echo '<div class="alert alert-info" role="alert">';
-        echo '<h1 class="alert-heading">Obrigado por se inscrever!</h1>';
+        require_once 'users/init.php';
+        // session_start();
+        $dados =    $_SESSION['data'];
+        $db = DB::getInstance();
+
+        if ($dados['aula_personal'] != 'N') {
+            $horariopersonal = $db->query("SELECT horario FROM agendamentos WHERE  tipo = 'personal' AND id = " . $dados['aula_personal'])->first()->horario;
+        }else{
+            $horariopersonal = 'Não irá fazer aula personal';
+        }
+
+        if ($dados['aula_tenis'] != 'N') {
+            $horarioTenis = $db->query("SELECT horario FROM agendamentos WHERE  tipo = 'tenis' AND id = " . $dados['aula_tenis'])->first()->horario;
+        }else{
+            $horarioTenis = 'Não irá fazer aula de tênis';
+        }
+        
+        
+        
+
+        echo '<ul class="list-unstyled">';
+        echo '<div class="alert alert-success" role="alert">';
+        echo '<h1 class="alert-heading">INSCRIÇÃO RELIZADA!</h1>';
         echo '<p>
-            Sua inscrição foi realizada com sucesso / Your registration for the UN Global Compact side event has been completed.
-            </p>';
+            Não esqueça seus horarios de aula, e se precisar de algo, estamos a disposição.            
+        </p>';
+        echo '<li><strong>Nome:</strong> ' . $dados['nome_completo'] . '</li>';
+        echo '<li><strong>Email:</strong> ' . $dados['email'] . '</li>';
+        echo '<li><strong>Telefone:</strong> ' . $dados['telefone'] . '</li>';
+        echo '<li><strong>Apartamento:</strong> ' . $dados['apartamento'] . '</li>';
+        echo '<li><strong>Horário de Chegada:</strong> ' . $dados['chegada'] . '</li>';
+        echo '<li><strong>Aula Personal:</strong> ' . $horariopersonal . '</li>';
+        echo '<li><strong>Aula de Tênis:</strong> ' . $horarioTenis  . '</li>';
+        echo '</ul>';
         echo '</div>';
+        echo '</div>';
+
         ?>
 
 

@@ -1,36 +1,46 @@
 
-// Função que valida o formulário de email na pagina de entrada
-//------------------------------------------------------------------------------
-document.addEventListener('DOMContentLoaded', function () {
-
-
-  var form = document.getElementById('emailForm');
-  if (!form) return;
-
-  form.addEventListener('submit', function (event) {
-    if (form.checkValidity() === false) {
-      event.preventDefault();
-      event.stopPropagation();
-    } else {
-      console.log('teste');
-      // Adicionar lógica para processar os dados do formulário
-      // Após o processamento, redirecione para a página de agradecimento
-      window.location.href = 'atualiza.php';
-    }
-    form.classList.add('was-validated');
-  }, false);
-});
-
 // Path: assets/scripts.js
 // funcao que valida o formulario de cadastro
 //------------------------------------------------------------------------------
 document.addEventListener('DOMContentLoaded', function () {
+
+
+  document.getElementById('cadastroForm').addEventListener('submit', function (event) {
+    event.preventDefault();
+    event.stopPropagation();
+
+
+
+    //verificar se horarios de aula de tenis e personal sao as mesmas antes de continuar
+    var aulaPersonal = document.getElementById('aulaPersonal').value;
+    var aulaTenis = document.getElementById('aulaTenis').value;
+    var errorMessage = document.getElementById('errorMessage');
+
+    if (aulaPersonal && aulaTenis && aulaPersonal === aulaTenis) {
+      errorMessage.classList.remove('d-none');
+    } else {
+      errorMessage.classList.add('d-none');
+      // Mostrar swal ao iniciar o envio
+      Swal.fire({
+        // icon: 'error',
+        title: 'Atenção!',
+        text: 'Você não pode se inscrever em ambas as aulas no mesmo horário, e deve preencher todos os dados obrigatórios.'
+      });
+
+      return false;
+
+    }
+
+  });
+
+
+
   var form = document.getElementById('cadastroForm');
   if (!form) return;
 
   var isSubmitting = false; // Variável para rastrear o status de envio
-
   form.addEventListener('submit', function (event) {
+
     event.preventDefault();
     if (form.checkValidity() === false) {
       event.stopPropagation();
