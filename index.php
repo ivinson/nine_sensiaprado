@@ -1,19 +1,16 @@
-<?php include 'users/init.php';
+<?php include 'users/init.php'; ?>
 
-
-?>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SENSIA - PARQUE PRADO</title>
+    <title>FESTIVAL DE INTERLAGOS - AGENDAMENTO DE TEST DRIVE</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-masker/1.1.1/vanilla-masker.min.js"></script>
     <style>
-        /* Ensures that the body does not overflow the width of the viewport */
         html,
         body {
             max-width: 100%;
@@ -23,30 +20,23 @@
 </head>
 
 <body>
-    <!-- Additional content section -->
     <section>
         <main class="container my-1" style="max-width: 750px;">
-            <img src="assets/high_level_invite_1.png" alt="Logo" class="img-fluid mb-4">
+            <img src="assets/topo_ram.png" alt="Logo" class="img-fluid mb-4">
             <div style="padding:20px; padding-top:10px; padding-bottom:10px;">
                 <div>
-                    <h1 class="text-center">Faça sua inscrição</h1>
-                    <!-- <p class="text-center">Preencha o formulário abaixo para confirmar sua presença no evento.</p> -->
-                    <div class="card mb-3 border-warning">
+                    <h1 class="text-center">FAÇA SEU AGENDAMENTO</h1>
+                    <!-- <div class="card mb-3 border-warning">
                         <div class="card-body text-warning">
                             <p class="small text-muted">
                                 Nota: Para garantir a melhor experiência para todos, permitimos a inscrição em apenas 2 horários por apartamento. Por favor, escolha seus horários de acordo com essa regra.
                             </p>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
             </div>
 
-
-
-
             <form id="cadastroForm" novalidate method="post" enctype="multipart/form-data">
-
-
                 <!-- Nome Completo -->
                 <div class="mb-3">
                     <label for="nomeCompleto" class="form-label">Nome Completo <b>*</b></label>
@@ -56,115 +46,179 @@
                     </div>
                 </div>
 
-                <!-- Email -->
+                <!-- Numero da CNH -->
                 <div class="mb-3">
-                    <label for="email" class="form-label">E-MAIL <b>*</b></label>
-                    <input required value="" type="email" class="form-control" id="email" name="email">
+                    <label for="numeroCNH" class="form-label">Número da CNH <b>*</b></label>
+                    <input required type="text" class="form-control" id="numeroCNH" name="numeroCNH">
                     <div class="invalid-feedback">
-                        Informe seu email
+                        Por favor, informe seu número da CNH.
                     </div>
                 </div>
 
+                <!-- CPF -->
+                <div class="mb-3">
+                    <label for="cpf" class="form-label">CPF <b>*</b></label>
+                    <input required type="text" class="form-control" id="cpf" name="cpf">
+                    <div class="invalid-feedback">
+                        Informe seu CPF.
+                    </div>
+                    <small class="text-muted">O CPF é obrigatório para a entrada nas aulas.</small>
+                </div>
+                <!-- validacao cpf -->
+                <script>
+                    function validarCPF(cpf) {
+                        cpf = cpf.replace(/[^\d]+/g, '');
+                        if (cpf.length !== 11 || /^(\d)\1+$/.test(cpf)) return false;
+
+                        let soma = 0;
+                        for (let i = 0; i < 9; i++) {
+                            soma += parseInt(cpf.charAt(i)) * (10 - i);
+                        }
+
+                        let resto = 11 - (soma % 11);
+                        if (resto === 10 || resto === 11) resto = 0;
+                        if (resto !== parseInt(cpf.charAt(9))) return false;
+
+                        soma = 0;
+                        for (let i = 0; i < 10; i++) {
+                            soma += parseInt(cpf.charAt(i)) * (11 - i);
+                        }
+
+                        resto = 11 - (soma % 11);
+                        if (resto === 10 || resto === 11) resto = 0;
+                        if (resto !== parseInt(cpf.charAt(10))) return false;
+
+                        return true;
+                    }
+
+                    document.getElementById('cpf').addEventListener('blur', function(event) {
+                        var cpfInput = document.getElementById('cpf');
+                        if (!validarCPF(cpfInput.value)) {
+                            cpfInput.setCustomValidity('CPF inválido');
+                            cpfInput.classList.add('is-invalid');
+                            event.preventDefault();
+                        } else {
+                            cpfInput.setCustomValidity('');
+                            cpfInput.classList.remove('is-invalid');
+                        }
+                    });
+                </script>
+
+
                 <!-- Telefone -->
-                <div class="mb-3" id="telefoneDiv">
-                    <label for="telefone" class="form-label">Whatsapp (com código de país e de área) <b>*</b></label>
+                <div class="mb-3">
+                    <label for="telefone" class="form-label">Telefone <b>*</b></label>
                     <input required type="text" class="form-control" id="telefone" name="telefone" placeholder="Ex: (00) 00000-0000">
                 </div>
 
-                <!-- apartamento -->
-                <div class="mb-3" id="apartamentoDiv">
-                    <label for="apartamento" class="form-label">Numero do Apartamento <b>*</b></label>
-                    <input required type="text" class="form-control" id="apartamento" name="apartamento">
+                <!-- Email -->
+                <div class="mb-3">
+                    <label for="email" class="form-label">E-mail <b>*</b></label>
+                    <input required type="email" class="form-control" id="email" name="email">
+                    <div class="invalid-feedback">
+                        Informe seu email.
+                    </div>
                 </div>
 
-                <!-- Hora de Chegada -->
+<!-- Data do Convite -->
+<div class="mb-3">
+    <label for="dataConvite" class="form-label">Data do Convite <b>*</b></label>
+    <select required class="form-select" id="dataConvite" name="dataConvite">
+        <option value="">Selecione... / Select...</option>
+        <option value="1">9 de agosto 2024</option>
+        <option value="2">10 de agosto 2024</option>
+        <option value="3">11 de agosto 2024</option>
+    </select>
+    <div class="invalid-feedback">
+        Informe a data do convite.
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        document.getElementById('dataConvite').addEventListener('change', function(event) {
+            var dataConvite = document.getElementById('dataConvite').value;
+            // var carroEscolhido = document.getElementById('carroEscolhido').value;
+            var errorMessage = document.getElementById('errorMessage');
+            errorMessage.classList.add('d-none');
+
+            if (dataConvite ) {
+                fetch('get-horarios.php?id_convite=' + dataConvite )
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Erro na resposta da requisição');
+                        }
+                        return response.text();
+                    })
+                    .then(data => {
+                        var horariosSelect = document.getElementById('carroEscolhido');
+                        horariosSelect.innerHTML = data;
+                    })
+                    .catch(error => {
+                        console.error('Erro na requisição:', error);
+                        errorMessage.textContent = 'Erro ao carregar os horários disponíveis.';
+                        errorMessage.classList.remove('d-none');
+                    });
+            }
+        });
+    });
+</script>
+
+
+                <!-- Agendamento Carro -->
                 <div class="mb-3">
-                    <label for="chegada" class="form-label">Que horas você pretende chegar? <b>*</b></label>
-                    <select required class="form-select" id="chegada" name="chegada">
+                    <label for="carroEscolhido" class="form-label">Agendamento</label>
+                    <select required class="form-select" id="carroEscolhido" name="carroEscolhido">
                         <option value="">Selecione... / Select...</option>
-                        <option value="09h e 11h">Entre 09h e 11h</option>
-                        <option value="12h e 14h">Entre 12h e 14h</option>
-                        <option value="14h e 16h">Entre 14h e 16h</option>
+                        <option value="N">Não quero participar</option>
+                        <?php
+                        // $db = DB::getInstance();
+                        // $response = $db->query("SELECT * FROM agendamentos WHERE  qtd > 0 ");
+                        // $agendamentos = $response->results();
+                        // foreach ($agendamentos as $agendamento) {
+                        //     echo '<option data-horario="' . $agendamento->horario . '" value="' . $agendamento->id . '">Commander - ' . $agendamento->horario . '  (' . $agendamento->qtd . ' vagas )' . '</option>';
+                        // }
+                        ?>
+                    </select>
+                </div>
+
+                <!-- Concessionária Convidando -->
+                <div class="mb-3">
+                    <label for="concessionaria" class="form-label">Concessionária Convidando <b>*</b></label>
+                    <select required class="form-select" id="concessionaria" name="concessionaria">
+                        <option value="">Selecione... / Select...</option>
+                        <option value="DAHRUJ">DAHRUJ</option>
+                        <option value="SINAL">SINAL</option>
+                        <option value="OUTRA">OUTRA</option>
                     </select>
                     <div class="invalid-feedback">
-                        Informe o horário de chegada
+                        Informe a concessionária convidando.
                     </div>
                 </div>
-
-                <!-- Agendamento Aula de Personal -->
-                <div class="mb-3">
-                    <label for="aulaPersonal" class="form-label">Aula com personal na academia (6 vagas por hora/aula)</label>
-                    <select required class="form-select" id="aulaPersonal" name="aulaPersonal">
-                        <option value="">Selecione... / Select...</option>
-                        <option value="N">Não quero participar</option>
-                        <?php
-                        $db = DB::getInstance();
-                        $response = $db->query("SELECT * FROM agendamentos WHERE tipo = 'personal' AND qtd > 0 ");
-                        $agendamentos = $response->results();
-                        foreach ($agendamentos as $agendamento) {
-                            echo '<option data-horario="' . $agendamento->horario . '" value="' . $agendamento->id . '">' . $agendamento->horario . '  (' . $agendamento->qtd . ' vagas )' . '</option>';
-                        }
-                        ?>
-                    </select>
-                </div>
-
-                <!-- Agendamento Aula de Tênis -->
-                <div class="mb-3">
-                    <label for="aulaTenis" class="form-label">Aula de tênis na quadra (8 vagas por aula, 30 min cada)</label>
-                    <select required class="form-select" id="aulaTenis" name="aulaTenis">
-                        <option value="">Selecione... / Select...</option>
-                        <option value="N">Não quero participar</option>
-                        <?php
-                        $db = DB::getInstance();
-                        $response = $db->query("SELECT * FROM agendamentos WHERE tipo = 'tenis' AND qtd > 0 ");
-                        $agendamentos = $response->results();
-                        foreach ($agendamentos as $agendamento) {
-                            echo '<option  data-horario="' . $agendamento->horario . '" value="' . $agendamento->id . '">' . $agendamento->horario . ' (' . $agendamento->qtd . ' vagas )' . '</option>';
-                        }
-                        ?>
-                    </select>
-                </div>
-
-                <!-- <div class="card mb-3">
-                    <div class="card-body">
-                        <p class="small text-muted">Ao confirmar sua presença, você aceita receber comunicações valiosas do Pacto Global da ONU - Rede Brasil / When confirming your presence, you agree to receive valuable communications from the United Nations Global Compact - Brazil Network.</p>
-                    </div>
-                </div> -->
 
                 <div id="errorMessage" class="alert alert-danger d-none">Você não pode se inscrever em ambas as aulas no mesmo horário.</div>
                 <br>
-                <button type="submit" class="btn " style="font-size: larger; background-color: #00261f; color: #fff;">CONFIRMAR MINHA INSCRIÇÃO</button>
+                <button type="submit" class="btn" style="font-size: larger; background-color: #000; color: #fff;">CONFIRMAR MINHA INSCRIÇÃO</button>
             </form>
         </main>
     </section>
-    <section class="text-center mt-5">
-        <img src="assets/footer.png" alt="Logo" class="img-fluid mb-4" width="30%" height="auto">
-        <p class="text-muted">© 2024 SENSIA - PARQUE PRADO. Todos os direitos reservados.</p>
-    </section>
 
-    <!-- Bootstrap JS Bundle -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
-
-
     <script src="assets/scripts.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="assets/styles.css" rel="stylesheet">
 
-
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Check if VanillaMasker is loaded
             if (typeof VanillaMasker === 'undefined') {
                 console.error('VanillaMasker is not loaded');
             } else {
-                // Apply mask to the phone number input
                 var phoneInput = document.getElementById('telefone');
                 VMasker(phoneInput).maskPattern('(99) 99999-9999');
             }
         });
     </script>
-
 </body>
 
 </html>

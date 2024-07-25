@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Agradecimento</title>
+    <title>Agendamento Test Drive - Festival interlagos </title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="assets/styles.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" rel="stylesheet">
@@ -66,7 +66,7 @@
 
 
     <header class="container-fluid text-center">
-        <img src="assets/high_level_invite_1.png" width="700px" height="auto" class="img-fluid" alt="Imagem Responsiva">
+        <img src="assets/topo_ram.png" width="700px" height="auto" class="img-fluid" alt="Imagem Responsiva">
     </header>
 
     <div class="container py-0" style="max-width: 730px;">
@@ -83,36 +83,36 @@
         $db = DB::getInstance();
 
         if ($_GET['aulaPersonal'] != 'N') {
-            $horariopersonal = $db->query("SELECT horario FROM agendamentos WHERE  tipo = 'personal' AND id = " . $_GET['aulaPersonal'])->first()->horario;
+            $horariopersonal = $db->query("SELECT horario FROM agendamentos WHERE  id = " . $_GET['aulaPersonal'])->first()->horario;
         } else {
             $horariopersonal = 'Não irá fazer aula personal';
         }
 
-        if ($_GET['aulaTenis'] != 'N') {
-            $horarioTenis = $db->query("SELECT horario FROM agendamentos WHERE  tipo = 'tenis' AND id = " . $_GET['aulaTenis'])->first()->horario;
-        } else {
-            $horarioTenis = 'Não irá fazer aula de tênis';
-        }
+        // if ($_GET['aulaTenis'] != 'N') {
+        //     $horarioTenis = $db->query("SELECT horario FROM agendamentos WHERE  tipo = 'tenis' AND id = " . $_GET['aulaTenis'])->first()->horario;
+        // } else {
+        //     $horarioTenis = 'Não irá fazer aula de tênis';
+        // }
 
 
 
 
         echo '<ul class="list-unstyled">';
         echo '<div class="alert alert-success" role="alert">';
-        echo '<h1 class="alert-heading">INSCRIÇÃO RELIZADA!</h1>';
-        echo '<p>
-            Não esqueça seus horarios de aula, e se precisar de algo, estamos a disposição.            
-        </p>';
+        echo '<h1 class="alert-heading">AGENDAMENTO REALIZADO!</h1>';
+        echo '<p> Não esqueça seus horarios do test drive.                    </p>';
+        echo '<hr>';
         echo '<li><strong>Nome:</strong> ' . $_GET['nomeCompleto'] . '</li>';
         echo '<li><strong>Email:</strong> ' . $_GET['email'] . '</li>';
         echo '<li><strong>Telefone:</strong> ' . $_GET['telefone'] . '</li>';
-        echo '<li><strong>Apartamento:</strong> ' . $_GET['apartamento'] . '</li>';
-        echo '<li><strong>Horário de Chegada:</strong> ' . $_GET['chegada'] . '</li>';
-        echo '<li><strong>Aula Personal:</strong> ' . $horariopersonal . '</li>';
-        echo '<li><strong>Aula de Tênis:</strong> ' . $horarioTenis  . '</li>';
+        echo '<li><strong>Carro e horario:</strong> Commander - ' . $horariopersonal . '</li>';     
         echo '</ul>';
         echo '</div>';
         echo '</div>';
+
+
+        //enviar notificação	via whatsapp
+        $msg = 'Olá, ' . $_GET['nomeCompleto'] . ' sua inscrição foi realizada com sucesso. ';
 
         ?>
 

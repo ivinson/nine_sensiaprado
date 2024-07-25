@@ -9,6 +9,8 @@ $apartamento = $_POST['apartamento'];
 $chegada = $_POST['chegada'];
 $aulaPersonal = $_POST['aulaPersonal'];
 $aulaTenis = $_POST['aulaTenis'];
+$quantidade = $_POST['quantidade'];
+$cpf = $_POST['cpf'];
 
 $data = array(
   'nome_completo' => $nomeCompleto,
@@ -18,7 +20,9 @@ $data = array(
   'chegada' => $chegada,
   'aula_personal' => $aulaPersonal,
   'aula_tenis' => $aulaTenis,
-  'status_rsvp' => 'CONFIRMADO'
+  'status_rsvp' => 'CONFIRMADO',
+  'quantidade' => $quantidade,
+  'cpf' => $cpf
 );
 // session_start();
 // $_SESSION['data'] = $data;

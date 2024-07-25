@@ -27,9 +27,9 @@ $GLOBALS['config'] = array(
 	'mysql'      => array(
 		'host'         => '108.179.193.178; port=3306',
 		// 'host'         => 'localhost; port=3306',
-		'username'     => 'even3314_sensiaprado',
-		'password'     => 'N@K+gibPbK#{@.LmUM',
-		'db'           => 'even3314_sensiaprado',
+		'username'     => 'even3314_ram',
+		'password'     => 'VXqfkzW$_+Ygi8Wv@]',
+		'db'           => 'even3314_ram',
 		// 'host'         => 'localhost; port=3306',
 		// 'username'     => 'root',
 		// 'password'     => '',
