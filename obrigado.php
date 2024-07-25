@@ -77,31 +77,31 @@
         // ini_set('display_errors', 1);
         // session_start();
         require_once 'users/init.php';
-
- 
-
         $db = DB::getInstance();
-
-        if ($_GET['aulaPersonal'] != 'N') {
-            $horariopersonal = $db->query("SELECT horario FROM agendamentos WHERE  id = " . $_GET['aulaPersonal'])->first()->horario;
+        if ($_GET['carroEscolhido'] != '') {
+            $horariopersonal = $db->query("SELECT horario FROM agendamentos WHERE  id = " . $_GET['carroEscolhido'])->first()->horario;
         } else {
-            $horariopersonal = 'Não irá fazer aula personal';
+            $horariopersonal = 'Não irá fazer test drive';
         }
 
-        // if ($_GET['aulaTenis'] != 'N') {
-        //     $horarioTenis = $db->query("SELECT horario FROM agendamentos WHERE  tipo = 'tenis' AND id = " . $_GET['aulaTenis'])->first()->horario;
-        // } else {
-        //     $horarioTenis = 'Não irá fazer aula de tênis';
-        // }
-
-
-
+        $data =  $_GET['dataConvite'] = $_GET['dataConvite'] ?? '';
+        //se a data for 1 = 09/08/2024
+        //se a data for 2 = 10/08/2024
+        //se a data for 3 = 11/08/2024
+        if ($data == 1) {
+            $data = '09/08/2024';
+        } elseif ($data == 2) {
+            $data = '10/08/2024';
+        } elseif ($data == 3) {
+            $data = '11/08/2024';
+        }
 
         echo '<ul class="list-unstyled">';
         echo '<div class="alert alert-success" role="alert">';
         echo '<h1 class="alert-heading">AGENDAMENTO REALIZADO!</h1>';
         echo '<p> Não esqueça seus horarios do test drive.                    </p>';
         echo '<hr>';
+        echo '<li><strong>Data :</strong> ' . $data . '</li>';
         echo '<li><strong>Nome:</strong> ' . $_GET['nomeCompleto'] . '</li>';
         echo '<li><strong>Email:</strong> ' . $_GET['email'] . '</li>';
         echo '<li><strong>Telefone:</strong> ' . $_GET['telefone'] . '</li>';

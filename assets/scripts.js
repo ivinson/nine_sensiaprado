@@ -7,26 +7,26 @@ document.addEventListener('DOMContentLoaded', function () {
     event.preventDefault();
     event.stopPropagation();
 
-    var aulaPersonalElement = document.getElementById('aulaPersonal');
-    var aulaPersonal = aulaPersonalElement.options[aulaPersonalElement.selectedIndex].dataset.horario;
+    // var aulaPersonalElement = document.getElementById('aulaPersonal');
+    // var aulaPersonal = aulaPersonalElement.options[aulaPersonalElement.selectedIndex].dataset.horario;
 
-    var aulaTenisElement = document.getElementById('aulaTenis');
-    var aulaTenis = aulaTenisElement.options[aulaTenisElement.selectedIndex].dataset.horario;
+    // var aulaTenisElement = document.getElementById('aulaTenis');
+    // var aulaTenis = aulaTenisElement.options[aulaTenisElement.selectedIndex].dataset.horario;
 
-    console.log('Aula Personal:', aulaPersonal);
-    console.log('Aula Tênis:', aulaTenis);
+    // console.log('Aula Personal:', aulaPersonal);
+    // console.log('Aula Tênis:', aulaTenis);
 
-    if (aulaPersonal && aulaTenis && aulaPersonal === aulaTenis) {
-      // Mostrar swal ao detectar conflito de horário
-      Swal.fire({
-        title: 'Atenção!',
-        text: 'Você não pode se inscrever em ambas as aulas no mesmo horário, e deve preencher todos os dados obrigatórios.',
-        icon: 'error'
-      }).then(() => {
-        aulaTenisElement.focus(); // Focar no campo de aula de tênis
-      });
-      return;
-    }
+    // if (aulaPersonal && aulaTenis && aulaPersonal === aulaTenis) {
+    //   // Mostrar swal ao detectar conflito de horário
+    //   Swal.fire({
+    //     title: 'Atenção!',
+    //     text: 'Você não pode se inscrever em ambas as aulas no mesmo horário, e deve preencher todos os dados obrigatórios.',
+    //     icon: 'error'
+    //   }).then(() => {
+    //     aulaTenisElement.focus(); // Focar no campo de aula de tênis
+    //   });
+    //   return;
+    // }
 
     if (form.checkValidity() === false) {
       event.stopPropagation();
